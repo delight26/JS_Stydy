@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>팩토리얼 계산</title>
+    <script src='factorial.js'></script>
+</head>
+<body>
+    <script>
+        function fact(n){
+            if(n<=1) return n;
+            return n*fact(n-1);
+        }
+        for(var i=1;i<10;i++){
+            document.writeln(i+"! = "+fact(i)+"<br/>");
+        }
+    </script>
+</body>
+</html>
