@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Symbol</title>
+</head>
+<body>
+    <script>
+        var sym1 = Symbol();
+        var sym2 = Symbol();
+        document.writeln(sym1 == sym2);
+
+        document.writeln("<br/>");
+
+        var HEART = Symbol("하트");
+        document.writeln(HEART.toString());
+
+        document.writeln("<br/>");
+
+
+        var NONE = Symbol("none");
+        var BLACK = Symbol("black");
+        var WHITE = Symbol("white");
+
+        var sym3 = Symbol.for("club");
+        var sym4 = Symbol.for("club");
+
+        document.writeln(sym3 == sym4);
+
+        document.writeln("<br/>");
+
+        var sym5 = Symbol.for("club");
+        var sym6 = Symbol("club");
+
+        document.writeln(Symbol.keyFor(sym5));
+        document.writeln(Symbol.keyFor(sym6));
+
+    </script>
+</body>
+</html>
