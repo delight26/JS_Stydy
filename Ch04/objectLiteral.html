@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>objectLiteral</title>
+</head>
+<body>
+    <script>
+        //4.12 객체 리터럴로 객체생성
+        var card1 = {suit:"하트", rank:"A"};
+        document.writeln(`${card1.suit}, ${card1.rank}<br/>`);
+
+        var card2 = {"suit":"킹", "rank":"K"};
+        document.writeln(`${card2["suit"]}, ${card2["rank"]}<br/>`);
+
+        document.writeln(`${card2["color"]}<br/>`);
+
+        var obj = {};
+        console.log(obj);
+
+        //4.1.3 프로퍼티 추가와 삭제
+        card1.value = 14;
+        console.log(card1);
+
+        delete card1.rank;
+        console.log(card1);
+
+        //4.1.4 in연산자로 프로퍼티가 있는지 확인하기
+        document.writeln(`${"suit" in card1}<br/>`);
+        document.writeln(`${"color" in card1}<br/>`);
+        document.writeln(`${"toString" in card1}<br/>`);
+
+    </script>
+</body>
+</html>
