@@ -29,6 +29,27 @@
         document.writeln(`${"suit" in card1}<br/>`);
         document.writeln(`${"color" in card1}<br/>`);
         document.writeln(`${"toString" in card1}<br/>`);
+        
+        //4.1.5 객체 리터럴 예제
+        var p = {x : 1.0, y : 2.5};
+        var circle = {
+            center : {x : 1.0, y : 2.0},
+            radius : 2.5
+        };
+        document.writeln(`${circle.center.x}<br/>`);
+        var person = {
+            name : "이준범",
+            age : 32,
+            sex : "남",
+            married : false
+        };
+
+        //4.1.7 객체는 참조 타입
+        var a = card1;
+        document.writeln(`${a.suit}<br/>`);
+        a.suit = "스페이드"
+        document.writeln(`${a.suit}<br/>`);
+        document.writeln(`${card1.suit}<br/>`);
 
     </script>
 </body>
