@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>function</title>
+</head>
+<body>
+    <script>
+        //4.2.2 함수 선언문으로 함수 정의
+        // function square(x){ return x * x;}
+
+        //4.2.4 함수 호출
+        document.writeln(`${square(3)}<br/>`);
+
+        //4.2.5 인수
+        //인수를 2개 받는 함수의 정의
+        function dist(p,q){
+            var dx = q.x - p.x;
+            var dy = q.y - p.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        var p1 = {x:1, y:1};
+        var p2 = {x:4, y:5};
+        var d = dist(p1, p2);
+        document.writeln(`${d}<br/>`);
+
+        //인수를 받지 않는 함수의 정의
+        var bark = function(){
+            document.writeln(`Bow-wow<br/>`);
+        }
+        bark();
+        
+        //함수에 인수도 없고 return문도 없으면 return 문이 실행되지 않은 상태에서 
+        //제어권이 함수를 호출한 코드로 되돌아가면 함수의 반환값이 undefined됨
+        document.writeln(bark());
+
+        //4.2.6 함수의 실행 흐름
+        //1. 호출한 코드에 있는 인수가 함수 정의문의 인자에 대입
+        //2. 함수 정의문의 중괄호 안에 작성된 프로그램이 순차적으로 실행
+        //3. return 문이 실행되면 호출한 코드로 돌아간다. return 문의 값은 함수의 반환값이 된다.
+        //4. return 문이 실행되지 않은 상태로 마지막 문장이 실행되면, 호출한 코드로 돌아간 후에 undefined가 함수의 반환값이 된다.
+
+        //4.2.7 함수 선언문의 끌어올림
+        //변수 선언과 마찬가지로 함수도 호이스팅이 적용되어 프로그램 첫머리로 끌어 올려짐
+        document.writeln(square(5));
+        function square(x){ return x * x;}
+    </script>
+</body>
+</html>
