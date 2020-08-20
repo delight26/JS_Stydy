@@ -33,7 +33,7 @@
         
         //함수에 인수도 없고 return문도 없으면 return 문이 실행되지 않은 상태에서 
         //제어권이 함수를 호출한 코드로 되돌아가면 함수의 반환값이 undefined됨
-        document.writeln(bark());
+        document.writeln(`${bark()}<br/>`);
 
         //4.2.6 함수의 실행 흐름
         //1. 호출한 코드에 있는 인수가 함수 정의문의 인자에 대입
@@ -43,8 +43,64 @@
 
         //4.2.7 함수 선언문의 끌어올림
         //변수 선언과 마찬가지로 함수도 호이스팅이 적용되어 프로그램 첫머리로 끌어 올려짐
-        document.writeln(square(5));
+        document.writeln(`${square(5)}<br/>`);
         function square(x){ return x * x;}
+
+        //4.2.8 값으로서의 함수
+        //자바 스크립트에서는 함수가 객체. 함수를 변수 이름으로 정의하여 실행할 수 있음
+        var sq = square;
+        document.writeln(`${sq(5)}<br/>`);
+
+        //4.2.9 참조에 의한 호출과 값에 의한 호출
+        //함수는 원시 값을 인수로 넘겼을 때와 객체를 인수로 넘겼을 때 다르게 동작. 
+        //인수에 원시 값을 넘기면 그 값 자체가 인자에 전달됨.(값의 전달)
+        function add1(x){
+            return x = x + 1;
+        }
+        var a = 3;
+        var b = add1(a);
+        document.writeln(`a = ${a} , b = ${b}<br/>`);
+
+        //인수가 객체일때
+        //인수로 객체를 넘겼을 때 전달되는 값은 참조 값.(참조 전달)
+        function add1(p){
+            p.x = p.x + 1;
+            p.y = p.y + 1;
+            return p;
+        }
+        var a = {x : 3, y : 4};
+        var b = add1(a);
+        document.writeln(`${a} , ${b}<br/>`);
+        console.log(a, b)
+
+        //인수 여러개 전달하는 방법
+        //함수 내에서 params.vx로 프로퍼티를 읽음 인수 추가 시 프로퍼티만 추가하면 됨
+        // 함수 안에서 객체의 프로퍼티를 수정하면 호출한 코드에 있는 인수 객체의 프로퍼티가 함께 바뀜
+        function setBallProperties(x, y, vx, vy, radius){
+
+        }
+        setBallProperties(0, 0, 10, 15, 5);
+
+        var parameters = {
+            x : 0,
+            y : 0,
+            vx : 10,
+            vy : 15,
+            radius : 5
+        }
+        function setBallProperties(params){
+
+        }
+        setBallProperties(parameters);
+        var parameters = {
+            x : 0,
+            y : 0,
+            vx : 10,
+            vy : 15,
+            radius : 5,
+            color : "blue"
+        }
+        setBallProperties(parameters);
     </script>
 </body>
 </html>
