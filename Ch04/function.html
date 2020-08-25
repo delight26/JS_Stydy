@@ -75,7 +75,7 @@
 
         //인수 여러개 전달하는 방법
         //함수 내에서 params.vx로 프로퍼티를 읽음 인수 추가 시 프로퍼티만 추가하면 됨
-        // 함수 안에서 객체의 프로퍼티를 수정하면 호출한 코드에 있는 인수 객체의 프로퍼티가 함께 바뀜
+        //함수 안에서 객체의 프로퍼티를 수정하면 호출한 코드에 있는 인수 객체의 프로퍼티가 함께 바뀜
         function setBallProperties(x, y, vx, vy, radius){
 
         }
@@ -101,6 +101,87 @@
             color : "blue"
         }
         setBallProperties(parameters);
+
+        //4.2.10 변수의 유효 범위
+        //자바스크립트는 어휘적 범위 채택 유효범위는 지역변수와 전역변수로 나누어진다.
+        var a = 'global1';
+        function f(){
+            var b = "local1";
+            document.writeln(`${a}<br/>`);
+            return b;
+        }
+        f();
+        document.writeln(`${b}<br/>`);
+
+        //변수의 충돌
+        //전역변수 이름과 지역 변수 이름이 같아지면 두 변수가 충돌
+        var a = 'global2';
+        function f(){
+            var a = "local2";
+            document.writeln(`${a}<br/>`);
+            return a;
+        }
+        f();
+        document.writeln(`${a}<br/>`);
+
+        //함수 안에서의 변수 선언과 변수 끌어올림
+        //함수 중간 부분에서 변수를 선언 하더라도 변수는 함수 첫머리에서 선언된 것처럼
+        //함수안의 다른 문장보다 먼저 생성됨
+        function f(){
+            document.writeln(`${a}<br/>`);
+            var a = "local3";
+            document.writeln(`${a}<br/>`);
+            return a;
+        }
+        f();
+
+        //함수 안에서의 변수 선언 생략
+        //변수를 선언하지 않느 상태에서 값을 대입하면 전역 변수로 선언됨
+        function f(){
+            a = "locla4";
+            document.writeln(`${a}<br/>`);
+            return a;
+        }
+        f();
+        document.writeln(`${a}<br/>`);
+
+        //4.2.11 블록 유효 범위 : let과 const
+        //let 선언자 var와 동일하 선언하고 let으로 선언한 변수의 유효 범위는 블록 안
+        let x = "outer x";
+        {
+            let x = "inner x";
+            let y = "inner y";
+
+            document.writeln(`${x}<br/>`);
+            document.writeln(`${y}<br/>`);
+        }
+
+        document.writeln(`${x}<br/>`);
+        document.writeln(`${y}<br/>`);
+        //let문으로 선언한 변수를 끌어올리지 않음
+        document.writeln(`${x}<br/>`);
+        let x = 5;
+        //let문으로 똑같은 이름을 가진 변수를 선언하면 문법오류 발생
+        let x;
+        let x;
+        
+        //const 선언자
+        //const문은 블록 유효 범위를 가지면서 한번만 할당할 수 있는 변수(상수)를 선언
+        //반드시 초기화 해야한다는 점이 중요
+        const c = 2;
+        c = 5;
+        //const 문으로 선언한 상수 중 상수 값이 객체이거나 배열일 경우에는
+        //프로퍼티 또는 프로퍼티 값을 수정할 수 있음
+        const origin = {x:1, y:2};
+        origin.x = 3;
+        document.writeln(`${origin}<br/>`);
+
+        //4.2.12 함수 리터럴로 함수 정의하기
+        //함수 리터럴은 이름없는 함수 익명함수 또는 무명 함수라고 부름 끝에 꼭 세미콜론을 붙여야함
+        //함수 리터럴로 정의한 함수는 끌어올리지 않음
+        console.log(square(3));
+        var square = function(x){return x*x;};
+        var square = function sq(x){return x*x;};
     </script>
 </body>
 </html>
