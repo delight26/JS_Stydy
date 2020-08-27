@@ -182,6 +182,33 @@
         console.log(square(3));
         var square = function(x){return x*x;};
         var square = function sq(x){return x*x;};
+
+        //4.2.13 객체의 메서드
+        //객체의 프로퍼티 중에서 함수 객체의 참조를 값으로 담고 있는 프로퍼티
+        //메서드 또한 프로퍼티의 일종 나중에 추가할 수 있음
+        //객체지향언어 데이터와 상태를 바꾸는 메서드를 하나로 묶는 용도로 사용
+        var circle = {
+            center: {x:1.0, y:2.0},
+            radius: 2.5,
+            area: function(){
+                return Math.PI * this.radius * this.radius;
+            }
+        };
+
+        circle.area();
+
+        circle.translate = function(a, b){
+            this.center.x  = this.center.x + a;
+            this.center.y  = this.center.y + b;
+        }
+
+        circle.translate(1, 2);
+        circle.center;
+
+        //4.2.14 함수를 활용하면 얻을 수 있는 장점
+        //재사용 할수 있다 - 같은 작업을 여러번 반복할때, 같은 알고리즘을 사용하지만 시작 값이 다를때 유용
+        //만든 프로그램을 이해하기 쉽다 - 일정한 처리를 모아서 이름을 붙일 수 있음 프로그램을 읽을 때 큰흐름을 쉽게 파악할 수 있음
+        //프로그램 수정이 간단해짐 - 해당 함수만 수정하면 여러곳을 수정하지 않아도 됨
     </script>
 </body>
 </html>
