@@ -140,7 +140,34 @@
         msg.codePointAt(0);// 69 문자 E의 코드 포인트
 
         //5.3.3 String 생성자의 메서드
-        console.log(123);
+        //fromCharCode 코드는 문자 코드를 UTF-16 인코딩 값을 문자열로 반환
+        String.fromCharCode(0xAE38);
+        String.fromCharCode(65,66,67);
+        String.fromCharCode(0xd83d, 0xdcd6);
+        String.fromCharCode(0x1f4d6);
+        String.fromCharCode(0xd83d, 0xdcd6);
+        console.log(String.fromCodePoint(0x1f4d6));
+
+        //유니코드 리터럴을 사용하여 스칼라 값을 문자로 바꿀 수 있다.
+        "\u{1f4d6}";
+
+        //5.3.4 문자열을 배열로 읽고 쓰기
+        msg[3];
+        msg[msg.length-1];
+        //배열처럼 값을 대입해서 수정할수 없음
+        msg[3] = "R";
+        console.log(msg);
+
+        var s = "📖";
+        s.codePointAt(0).toString(16); // 코드 포인트의 스칼라 값
+        s[0].codePointAt(0).toString(16); //상위 써로게이트
+        s[1].codePointAt(0).toString(16); //하위 써로게이트
+        s[0] + s[1];
+
+        function stringToArray(s){
+            return s.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[^\uD800-\uDfff]/g) || [];
+        }
+        stringToArray("📖 모던 자바스크립트 입문");
     </script>
 </body>
 </html>
