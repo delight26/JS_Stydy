@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>explicitTypeConversion</title>
+</head>
+<body>
+    <script>
+        //5.7 명시적 타입 변환
+        //5.7.1 숫자를 문자열로 변환하기
+        //숫자 + 문자열을 사용하면 숫자의 타입이 문자열로 바뀜
+        document.writeln("숫자 + 문자열<br/>");
+        document.writeln(10 + "cookies" + " - " + typeof(10 + "cookies") + "<br/>");
+        document.writeln(100 + "" + " - " + typeof(100 + "") + "<br/>");
+        document.writeln(("0000" + 12).slice(-4) + " - " + typeof(("0000" + 12).slice(-4)) + "<br/><br/>");
+
+        //Number객체의 매서드를 활용하는 방법
+        var n = 26;
+        document.writeln("Number객체의 매서드를 활용하는 방법<br/>");
+        document.writeln(n.toString() + " - " + typeof(n.toString()) + "<br/>");
+        document.writeln(n.toString(2) + " - " + typeof(n.toString(2)) + "<br/>");
+        document.writeln(n.toString(16) + " - " + typeof(n.toString(16)) + "<br/>");
+        document.writeln((26).toString(16) + " - " + typeof((26).toString(16)) + "<br/><br/>");
+
+        var x = 1234.567;
+        document.writeln(x.toString() + " - " + typeof(x.toString()) + "<br/>");
+        document.writeln(x.toString(16) + " - " + typeof(x.toString(16)) + "<br/>");
+        document.writeln(x.toFixed(0) + " - " + typeof(x.toFixed(0)) + "<br/>");
+        document.writeln(x.toFixed(2) + " - " + typeof(x.toFixed(2)) + "<br/>");
+        document.writeln(x.toFixed(4) + " - " + typeof(x.toFixed(4)) + "<br/>");
+        document.writeln(x.toExponential(3) + " - " + typeof(x.toExponential(3)) + "<br/>");
+        document.writeln(x.toPrecision(3) + " - " + typeof(x.toPrecision(3)) + "<br/>");
+        document.writeln(x.toPrecision(6) + " - " + typeof(x.toPrecision(6)) + "<br/><br/>");
+
+        //String 함수를 활용하는 방법
+        //String 생성자 앞에 new 연산자를 붙이면 String 객체를 생성하는 함수로 사용할 수 있음 new 연산자를 붙이지 않으면 일반적인 함수로 활용
+        document.writeln("String 함수를 활용하는 방법<br/>");
+        document.writeln(String(26) + " - " + typeof(String(26)) + "<br/>");
+        document.writeln(String(1234.567) + " - " + typeof(String(1234.567)) + "<br/>");
+        document.writeln(String(0x1a) + " - " + typeof(String(0x1a)) + "<br/><br/>");
+
+        //String 함수에는 모든 데이터 타입을 문자열 타입으로 바꾸는 기능이 있음
+        document.writeln(String("ABC") + " - " + typeof(String("ABC")) + "<br/>");
+        document.writeln(String(true) + " - " + typeof(String(true)) + "<br/>");
+        document.writeln(String(false) + " - " + typeof(String(false)) + "<br/>");
+        document.writeln(String(NaN) + " - " + typeof(String(NaN)) + "<br/>");
+        document.writeln(String(null) + " - " + typeof(String(null)) + "<br/>");
+        document.writeln(String(undefined) + " - " + typeof(String(undefined)) + "<br/>");
+        document.writeln(String({x:1, y:2}) + " - " + typeof(String({x:1, y:2})) + "<br/>");
+        document.writeln(String([1, 2, 3]) + " - " + typeof(String([1, 2, 3])) + "<br/><br/>");
+
+        // 5.7.2 문자열을 숫자로 변환하기
+        //수식 안에서 묵시적으로 변환하는 방법
+        var s = "2";
+        document.writeln("수식 안에서 묵시적으로 변환하는 방법<br/>");
+        document.writeln(s - 0 + " - " + typeof(s - 0) + "<br/>");
+        document.writeln(+s + " - " + typeof(+s) + "<br/><br/>");
+
+        //parseInt 와 parseFloat 함수를 사용하는 방법
+        document.writeln("parseInt 와 parseFloat 함수를 사용하는 방법<br/>");
+        document.writeln(parseInt("3.14") + " - " + typeof(parseInt("3.14")) + "<br/>");
+        document.writeln(parseFloat("3.14") + " - "  + typeof(parseFloat("3.14")) + "<br/>");
+        document.writeln(parseInt("3.14 meters") + " - "  + typeof(parseInt("3.14 meters")) + "<br/>");
+        document.writeln(parseFloat("3.14 meters") + " - "  + typeof(parseFloat("3.14 meters")) + "<br/>");
+        document.writeln(parseInt("0xFF") + " - "  + typeof(parseInt("0xFF")) + "<br/>");
+        document.writeln(parseInt("0.5") + " - "  + typeof(parseInt("0.5")) + "<br/>");
+        document.writeln(parseInt(".5") + " - "  + typeof(parseInt(".5")) + "<br/>");
+        document.writeln(parseInt("abc") + " - "  + typeof(parseInt("abc")) + "<br/>");
+        document.writeln(parseFloat("\100") + " - "  + typeof(parseFloat("\100")) + "<br/><br/>");
+
+        //parseInt 함수의 두번째 인수로 기수를 설정할 수 있음 기수는 2~36사이 값을 지정
+        document.writeln(parseInt("101", 2) + " - "  + typeof(parseInt("101", 2)) + "<br/>");
+        document.writeln(parseInt("ff", 16) + " - "  + typeof(parseInt("ff", 16)) + "<br/><br/>");
+
+        //Number함수를 활용하는 방법
+        //Number생성자 앞에 new 연산자를 붙이면 Number 객체를 생성하는 함수로 사용할 수 있음
+        //new 연산자를 붙이지 않으면 일반 함수로 활용할 수 있음
+        //이때 Number함수의 반환 값은 Number객체가 아닌 숫자
+        //Number 함수의 인수로 문자열을 넘기면 정수 또는 부동 소수점을 뜻하는 문자열을 숫자로 바꿈
+        //Number 함수는 10진수만 처리할 수 있음
+        document.writeln("Number함수를 활용하는 방법<br/>");
+        document.writeln(Number("2.71828") + " - "  + typeof(Number("2.71828")) + "<br/>");
+        document.writeln(Number(123) + " - "  + typeof(Number(123)) + "<br/>");
+        document.writeln(Number(true) + " - "  + typeof(Number(true)) + "<br/>");
+        document.writeln(Number(false) + " - "  + typeof(Number(false)) + "<br/>");
+        document.writeln(Number(NaN) + " - "  + typeof(Number(NaN)) + "<br/>");
+        document.writeln(Number(undefined) + " - "  + typeof(Number(undefined)) + "<br/>");
+        document.writeln(Number(null) + " - "  + typeof(Number(null)) + "<br/>");
+        document.writeln(Number({x:1, y:2}) + " - "  + typeof(Number({x:1, y:2})) + "<br/>");
+        document.writeln(Number([1, 2, 3]) + " - "  + typeof(Number([1, 2, 3])) + "<br/><br/>");
+
+        //5.7.3 논리값으로 변환하기
+        //모든 값을 논리값으로 바꾸는 방법은 두가지
+        document.writeln("논리값으로 변환하기<br/>");
+        document.writeln(!!x + " - "  + typeof(!!x) + "<br/>");
+        document.writeln(Boolean(x) + " - "  + typeof(Boolean(x)) + "<br/>");
+    </script>
+</body>
+</html>

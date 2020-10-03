@@ -6,6 +6,38 @@
 </head>
 <body>
     <script>
+        //5.5 비트 연산
+        //5.5.1 비트 연산
+        //비트연산이란 2진수 숫자의 자리별 값을 다루는 연산
+        var a = 105;// = 01101001 괄호 안의 (2) 는 2진수라는 뜻
+        var b = -91;// = 10100101 첫번째 비트는 부호 비트
+
+        //5.5.2 비트 논리 연산자
+        //비트 논리 연산자는 비트 값이 0이면 false, 1이면 true로 평가하는 연산자
+        document.writeln((a & b) + "<br/>"); //33 = 00100001
+        document.writeln((a | b) + "<br/>"); //-19 = 11101101
+        document.writeln((a ^ b) + "<br/>"); //-52 = 11001100
+        document.writeln((~a) + "<br/><br/>"); //-106 = 10010110
+
+        //5.5.3 비트 시프트 연산자
+        //비트 시프트 연산자는 정수를 2진수 비트 단위로 오른쪽 또는 왼쪽으로 이동시키는 연산자
+        document.writeln((a << 3) + "<br/>"); //840
+        document.writeln((b >> 3) + "<br/>"); //-12
+        document.writeln((b >>> 3) + "<br/><br/>"); //536870900
+        
+        //5.5.4 비트 연산의 대입 연산자
+        //산술 연산자와 마찬가지로 비트 연산의 대입 연산자를 사용할 수 있음
+        document.writeln((a &= b) + "<br/>"); // a = a & b
+        a = 105;
+        document.writeln((a |= b) + "<br/>"); // a = a | b
+        a = 105;
+        document.writeln((a ^= b) + "<br/>"); // a = a ^ b
+        a = 105;
+        document.writeln((a <<= 3) + "<br/>"); // a = a << b
+        a = 105;
+        document.writeln((a >>= 3) + "<br/>"); // a = a >> b
+        b = -91;
+        document.writeln((b >>>= 3) + "<br/><br/>"); // a = a >>> b
 
     </script>
 </body>
