@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>6.3_eventHandler</title>
+    <script>
+        //6.3 이벤트 처리기 등록하기와 타이머 알아보기
+        //6.3.1 이벤트 처리기
+        //웹 브라우저에서 동작하는 프로그램은 기본적으로 이벤트 주도형 프로그램
+        //이벤트 주도형 프로그램이란 이벤트가 발생할 때까지 기다렸다가 이벤트가 발생했을 때 미리 등록해 둔 작업을 수행하는 프로그램
+        //이벤트 처리기란 이벤트가 발생했을 때 실행되는 함수를 말함
+        //함수를 이벤트가 발생했을 때 동작할 이벤트 처리기로 설정하는 행위를 가리켜 함수를 이벤트의 이벤트 처리기로 등록 한다고 함
+        //방법 1. HTML 요소의 속성으로 등록하는 방법
+        //방법 2. DOM 요서의 프로퍼티로 등록하는 방법
+        //방법 3. addEventListener 메서드를 사용하는 방법
+
+        //6.3.2 HTML요소의 속성에 이벤트 처리기 등록하기
+        //onclick부분은 이벤트 처리기 이름이며 이벤트 처리기 이름은 곧 이벤트 유형
+        //이벤트 처리기 속성에는 이벤트가 발생했을 때 실행할 자바스크립트 문장을 문자열로 만들어 대입
+        //속성에 문장을 여러 개 작성하고자 할 때는 문장과 문장을 세미콜론으로 구분한 문자열을 대입
+        //이벤트 처리기 속성을 사용해서 이벤트 처리기를 등록하면 HTML 코드와 자바스크립트 코드가 뒤섞이는 단점
+        function displayTime(){
+            var d = new Date();
+            console.log("현재 시각은 " + d.toLocaleString() + " 입니다.");
+        }
+
+        //6.3.3 DOM에서 가져온 HTML 요소에 이벤트 처리기 지정하기
+        //DOM은 자바스크립트 등의 프로그램이 HTML 요소를 조작할 수 있게 하는 인터페이스
+
+        //DOM 객체 - DOM에서는 HTML 문서나 HTML 요소를 가리키는 객체로 자바스크팁트를 사용하여 HTML 문서를 조작
+        //window : Window 객체라고 부르며 웹 브라우저 윈도우 하나 또는 탭 하나를 가리킴
+        //document : Document 객체라고 부르며 HTML 문서 전체를 가리킴. HTML 문서에서 HTML 요소 객체를 가져오거나 HTML 요소를 새로 만드는
+        //등 HTML 문서 전반에 걸친 기능을 제공
+        //요소 객체 : HTML 문서의 요소를 가리키는 객체
+
+        //DOM을 사용해서 이벤트 처리기 등록하기
+        //DOM에서 이벤트 처리기를 동록하는 가장 큰 목적은 HTML 코드와 자바스크립트 코드를 분리하기 위함
+        //코드를 분리하면 가독성과 유지 보수성이 높아짐
+        
+        //1. Window 객체의 onload 프로퍼티에 함수를 저장
+        //head 요소 안에 있는 script 요소의 코드는 body가 읽어들이지 못한 시점에 실행되므로 window.onload를 이용하여 
+        //이벤트 처리기 등록하는 작업의 실행 시점을 HTML 문서 전체를 읽어들인 이후로 미룸
+
+        //이 함수는 웹 브라우저가 문서를 모두 읽어 들인 후에 실행
+        window.onload = function(){
+            //2. input 요소의 객체 가져오기
+            //document.getElementById는 전달받은 인수를 id 속성의 값으로 가지고 있는 HTML 요소의 요소 객체를 반환
+            var button = document.getElementById("button");
+            //3. input 요소를 클릭했을 때 동작하는 이벤트 처리기를 등록
+            //요소 객체의 onclick 프로퍼티 값으로 함수 displayTime의 참조를 대입 onclick 이벤트 처리기를 등록하기 위한
+            //프로퍼티를 가리켜 이벤트 처리기 프로퍼티라고함 모든 요소 객체에는 다양한 이벤트를 처리하기 위한 
+            //이벤트 처리기 프로퍼티가 마련되어 있음
+            button.onclick = displayTime;
+            /* button.onclick = function (){
+                var d = new Date();
+                console.log("현재 시각은 " + d.toLocaleString() + " 입니다.");
+            }; */
+            /* button.onclick = function displayTime(){
+                var d = new Date();
+                console.log("현재 시각은 " + d.toLocaleString() + " 입니다.");
+            }; */
+
+            //자바스크립트 코드가 실행되는 시점 - 웹 브라우저 HTML 문서를 위에서 부터 차례대로 해석하면서 표시 해석하는 도중에 script 요소를
+            //발견하면 script 요소 안에 있는 코드를 해석해서 실행 script 요소 안에 있는 코드를 싱행한 다음에 HTML 요소를 해석하여 추가해감
+            //script 요소는 동기 실행(블로킹 실행) 결과적으로 script 요소 안의 작업이 끝나기 전 까지는 HTML 문서의 해석이 멈춤
+
+            //이벤트 처리기 제거
+            //이벤트 처리기가 등록되어 있지 않은 이벤트 처리기 프로퍼티에는 기본적으로 null이 담겨있음
+            //이벤트 처리기 프로퍼티에 등록한 이벤트 처리기를 제거할 때는 단순히 null을 대입하면 됨
+            console.log(button.onkeydown); // null
+            button.onclick = null;
+        };
+
+        //6.3.4 타이머
+        //웹 브라우저의 Window객체에는 setTimeout과 setInterval 메서드가 있음 이 메서드를 활용하면 지정된 시간이 흐른 후에 함수를 실행하거나
+        //일정한 시간 간격에 따라 함수를 반복 실행할 수 있습니다.
+
+        //지정된 시간이 흐른 후에 함수 실행하기 : setTimeout
+        //setTimeout 메서드를 사용하면 일정 시간이 흐른 후에 한번만 호출되는 함수를 등록할 수 있음
+        setTimeout(function() {
+            console.log(new Date());
+        },2000);
+
+        //setTimeout()이 반환한 값을 clearTimeout()의 인수로 넘겨서 실행하면 함수 실행이 취소됨
+        var timer = setTimeout(function() {new Date();}, 2000);
+        clearTimeout(timer);
+
+        //지연 시간을 0밀리초로 지정하면 지정된 함수가 즉시 실행되지 않고 현재 실행 중인 이벤트 처리기의 작업이 끝나기를 기다렸다가 
+        //가능한 빨리 실행
+
+        //지정된 시간마다 반속해서 실행하기 : setInterval
+        //setInterval 메서드를 활용하면 일정한 시간 간격에 따라 반복해서 실행할 함수를 등록할 수 있다
+        setInterval(function() {
+            console.log(new Date());
+        }, 1000);
+
+        //setInterval()이 반환한 값을 clearInterval()의 인수로 넘겨서 실행하면 함수 실행이 취소됨
+        var timer = setInterval(function() {console.log(new Date());}, 1000);
+        clearInterval(timer);
+
+        //setTimeout과 setInterval의 첫 번째 인수로 문자열을 넘길 수도 있음
+        //지정한 문자열은 eval()로 평가된 후에 실행됨
+        setInterval("console.log(new Date());", 1000);
+
+    </script>
+</head>
+<body>
+    <input type="button" value="click" onclick="displayTime();"><br/>
+    <input type="button" value="click" id="button">
+</body>
+</html>

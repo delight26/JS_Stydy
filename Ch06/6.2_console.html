@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>6.2_console</title>
+</head>
+<body>
+    <script>
+        //6.2.1 Console 객체의 메서드
+        //console 객체는 Node.js를 포함한 다양한 자바스크립트 실행 환경에서 사용할 수 있음
+        //console 객체는 콘솔 출력을 돕는 다양한 기능을 제공 console 객체는 사용 방법이 간단하고 프로그램 동작을 확인하거나 디버깅하는 데 자주 사용
+        console.dir("객체의 대화형 목록을 출력");
+        console.error("오류 메시지를 출력");
+        console.info("메시지 타입 로그를 출력");
+        console.log("일반 로그를 출력");
+        console.time(); //처리 시간 측정용 타이머를 시작
+        console.timeEnd(); //처리 시간 측정용 타이머를 정지시키고 타이머를 시작한 후에 흐른 시간을 밀리초 단위로 출력
+        console.trace(); //스택 트레이스를 출력
+        console.warn("경고 메시지를 출력");
+
+        //6.2.2 콘솔에 텍스트 출력하기
+        //문자열이나 변수값을 콘솔에 로그로 출력하려면 console.log, console.info, console.warn, console.error 사용
+        //각 메서드의 차이는 로그 시작 부분에 주의 표식을 추가하는 등 로그 스타일이 다름
+        //%o 객체를 가리키는 하이퍼링크로 변환 ,%d 정수 값으로 젼환, %i 정수 값으로 변환, %s 문자열로 변환, %f 부동소수점 값으로 변환
+        var a = [2, 4, 6];
+        console.log("배열" , a , "의 길이는", a.length , "입니다.");
+        console.log("배열 " + a + " 의 길이는 " + a.length + " 입니다.");
+        var name = "Tom";
+        var height = 172.5;
+        console.log("그의 이름은 %s 이며 키는 %f cm 입니다.", name, height);
+
+        //6.2.3 객체의 프로퍼티를 목록으로 표시하기
+        //console.dir 메서드는 객체의 프로퍼티를 나열 인수로 객체를 받음
+        var p = {x:1, y:2};
+        console.dir(p);
+
+        //6.2.4 타이머
+        //console.time과 console.timeEnd 메서드를 사용해서 특정 코드의 실행시간을 측정할 수 있다.
+        //처리에 소요된 시간이 밀리초 단위로 표시됨 타이머는 여러 개 만들 수 있음.
+        console.time("answer_time");
+        alert("확인 버튼을 누르십시오");
+        console.timeEnd("answer_time");
+    </script>
+</body>
+</html>
