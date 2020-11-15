@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>7.2_ifelse</title>
+    <script>
+        //7.2 조건문
+        //7.2.1 if/else문
+        //조건의 만족 여부에 따라 처리할 작업을 선택
+        var a = 0;
+        if(a > 0) a++;
+
+        var name = "";
+        var message = "";
+        if(!name){
+            name = "";
+            message = "이름을 입력하십시오.";
+        }
+
+        var x = 0;
+        if(x >= 10)
+            console.log("Positive or Zero");
+        else
+            console.log("Nagative");
+
+        if(a>b)
+            if(a>c)
+                console.log("a가 가장 크다");
+        else
+            console.log("a는 b이하");
+        
+        if(a>b){
+            if(a>c){
+                console.log("a가 가장 크다");
+            }else{
+                console.log("a는 b이하");
+            }
+        }
+
+        if(num == 1){
+            console.log("One");
+        }else{
+            if(num == 2){
+                console.log("Two");
+            }else{
+                console.log("Other");
+            }
+        }
+
+        if(num == 1){
+            console.log("One");
+        }else if(num == 2){
+            console.log("Two");
+        }else{
+            console.log("Other");
+        }
+
+        function isLeapYear(year){
+            if((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))){
+                return true;
+            }
+            return false;
+        }
+
+        window.onload = function(){
+            document.getElementById("button").onclick = function(){
+                //수축기 혈압(최고 혈압)을 구한다
+                var hp = parseFloat(document.getElementById("highpressure").value);
+                // 이완기 혈압(최저 혈압)을 구한다.
+                var lp = parseFloat(document.getElementById("lowpressure").value);
+                //판정 결과를 내보낼 HTML요소
+                var judgment = document.getElementById("judgement");
+                //고혈압 여부를 판정하여 HTML 요소에 출력한다.
+                if(hp < 120 && lp < 80){
+                    judgment.innerHTML = "당신의 혈압은 정상입니다.";
+                }else if(hp<139 && lp<89){
+                    judgment.innerHTML = "당신의 혈압은 다소 높습니다.";
+                }else{
+                    judgment.innerHTML = "당신은 고혈압입니다.";
+                }
+            };
+        };
+
+        //7.2.2 switch문
+        //switch문을 사용하면 분기점 여러개를 더육 간결하게 표현할 수 있음
+        switch(n){
+            case 1:
+                console.log("One");
+                break;
+            case 2:
+                console.log("Two");
+                break;
+            case 3:
+                console.log("Three");
+                break;
+            default:
+                console.log("Other");
+        }
+
+        //break문이나 return 문을 작성하지 않으면 break문, return 문 switch블록의 끝을 만날때까지 발견한 모든 문장을 실행
+        //이것을 폴 스루라고 하는데 주로 여러개의 case라벨이 가리키는 표현식 결과와 일치하는 실행문을 실행하고자 할 때 사용하는 기법
+        //폴스루를 사용하면 알고리즘이 복잡해짐 default는 어느위치에 있어도 문법 오류가 발생하지 않음.
+        function binaryOperation(a, b, operator){
+            switch(operator){
+                case "+": return a+b;
+                case "-": return a-b;
+                case "*": return a*b;
+                case "/": return a/b;
+                case "%": return a%b;
+                case "^": return Math.pow(a,b);
+                default: return NaN;
+            }
+        }
+        console.log(binaryOperation(2,3,"+"));
+        console.log(binaryOperation(2,3,"-"));
+        console.log(binaryOperation(2,3,"*"));
+        console.log(binaryOperation(2,3,"/"));
+        console.log(binaryOperation(2,3,"%"));
+        console.log(binaryOperation(2,3,"^"));
+        console.log(binaryOperation(2,3,"A"));
+
+    </script>
+</head>
+<body>
+    <p>수축기 혈압(최고 혈압) : <input type="number" id="highpressure"/></p>
+    <p>이완기 혈압(최고 혈압) : <input type="number" id="lowpressure"/></p>
+    <p id="judgement">이곳에 판정 결과가 표시됩니다.</p>
+    <input type="button" id="button" value="확인하기"/>
+</body>
+</html>

@@ -38,16 +38,52 @@
             ctx.lineTo(10, 370);
             ctx.closePath();
             ctx.stroke();
+            
             //삼각형 채우기
             ctx.beginPath();
             ctx.moveTo(60, 380);
             ctx.lineTo(110, 470);
             ctx.lineTo(10, 470);
             ctx.fill();
+
+            //선으로 연결하기
+            ctx.beginPath();
+            ctx.moveTo(100,550);
+            ctx.lineTo(100,650);
+            ctx.moveTo(50,600);
+            ctx.lineTo(150,600);
+            ctx.stroke();
+
+            //시계방향
+            ctx.beginPath();
+            ctx.arc(100, 750, 80, 30 * Math.PI/180,120 * Math.PI/180, false);
+            ctx.stroke();
+            ctx.fill();
+
+            //시계반대방향
+            ctx.beginPath();
+            ctx.arc(100, 750, 80, 30 * Math.PI/180,120 * Math.PI/180, true);
+            ctx.stroke();
+            ctx.fill();
+
+            //둥근모서리
+            ctx.beginPath();
+            ctx.moveTo(10,900);
+            ctx.lineTo(200,900);
+            ctx.arc(200, 950,50,-Math.PI/2, 0 ,false);
+            ctx.lineTo(250, 1060);
+            ctx.stroke();
+
+            //둥근모서리
+            ctx.beginPath();
+            ctx.moveTo(10,1200);
+            ctx.arcTo(250, 1200, 250, 160, 50);
+            ctx.lineTo(250, 1350);
+            ctx.stroke();
         }
     </script>
 </head>
 <body>
-    <canvas id="mycanvas" width="1000" height="1000"></canvas>
+    <canvas id="mycanvas" width="2000" height="2000"></canvas>
 </body>
 </html>
