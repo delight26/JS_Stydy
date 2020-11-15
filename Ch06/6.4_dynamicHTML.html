@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>6.4_dynamicHTML</title>
+    <script>
+        //6.4 HTML요소를 동적으로 읽고 쓰기
+        //6.4.1 HTML 요소의 innerHTML 프로퍼티로 읽고 쓰기
+        //요소 객체의 innerHTML 프로퍼티는 그 HTML 요소의 내용을 가리키며, 이로써 HTML 요소의 내용을 읽거나 쓸 수 있음
+        window.onload = function(){
+            var startButton = document.getElementById("start");
+            var stopButton = document.getElementById("stop");
+            var display = document.getElementById("display");
+            var startTime, timer;
+
+            startButton.onclick = start;
+
+            function start(){
+                startButton.onclick = null;
+                stopButton.onclick = stop;
+                startTime = new Date();
+
+                //0.1초마다 경과한 시간을 표시
+                timer = setInterval(function(){
+                    var now = new Date();
+                    //display에 경과한 시간 쓰기
+                    display.innerHTML = ((now - startTime)/1000).toFixed(2);
+                },10);
+            }
+
+            function stop(){
+                clearInterval(timer);
+                startButton.onclick = start;
+            }
+
+            //6.4.2 폼 컨트롤의 입력 값 읽기
+            //input 요소 등의 폼 컨트롤 요소를 사용하면 사용자의 입력 값을 자바스크립트 프로그램에서 사용할 수 있음
+            document.getElementById("button").onclick = function(){
+                //input 요소에 입력된 몸무게 데이터와 키 데이터를 가져온다.
+                var h = parseFloat(document.getElementById("height").value);
+                var w = parseFloat(document.getElementById("weight").value);
+
+                //체질량지수를 bmi라는 id를 가진 요소 output에 기록한다
+                var bmi = document.getElementById("bmi");
+                bmi.innerHTML = (w/h/h).toFixed(1);
+            };
+        };
+
+        //6.4.3 document.write
+        //초창기 자바스크립트에서는 document.write가 처리 결과를 출력하는 유일한 수단.
+        //현재는 DOM을 사용하여 HTML요소를 생성하거나 처리 결과를 HTML문서로 출력하는 것이 일반적
+        //document.write메서드는 인수로 받은 문자열을 HTML문서의 body요소 안에 출력
+        //웹브라우저가 HTML문서를 해석하는 도중에 document.write를 실행
+        var now = new Date();
+        var month = now.getMonth() + 1;
+        var day = now.getDate();
+        document.write("<p>6.4.3 document.write</p>");
+        document.write("<p>오늘은 "+ month +"월 "+ day +"일 입니다.</p><br/>");
+
+    </script>
+</head>
+<body>
+    <p>6.4.1 HTML 요소의 innerHTML 프로퍼티로 읽고 쓰기</p>
+    <p id="display">0.00</p>
+    <input id="start" type="button" value="start">
+    <input id="stop" type="button" value="stop"><br/><br/>
+
+    <p>6.4.2 폼 컨트롤의 입력 값 읽기</p>
+    <p>키 : <input type = "number" id="height"/>m</p>
+    <p>몸무게 : <input type = "number" id="weight"/>kg</p>
+    <p>당신의 체질량지수는 <output id="bmi">?</output> 입니다.</p>
+    <input id="button" type="button" value="계산"><br/><br/>
+
+</body>
+</html>
