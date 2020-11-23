@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>7.3_forWhile</title>
+    <script>
+        //7.3 반복문
+        //7.3.1 while문
+        //while문은 조건만 맞아 떨어지면 일정한 처리를 계속 반복해서 실행 while문의 조건식은 반복 조건을 뜻함 
+        //while문 안에서 break를 실행하면 while문에서 바져나옴, while문에서 continue를 실행하면 while문의 시작 부분으로 되돌아감
+        function fact(n){
+            var k = 1, i = 1;
+            while(i < n){
+                console.log("i = " + i + ", k = " + k);
+                k *= (++i);
+            }
+            console.log("i = " + i + ", k = " + k);
+            return k;
+        }
+        console.log(fact(5));
+
+        function linearSearch(x, a){
+            var i = 0;
+            var n = a.length;
+
+            while(i < n && x > a[i]){
+                i++;
+            }
+            if(x == a[i]){
+                return i;
+            }
+            return null;
+        }
+        var a = [2, 4, 7, 12, 15, 21, 34, 35, 46, 57, 70, 82, 86, 92, 99];
+        console.log(linearSearch(35, a));
+
+        function binarySearch(x, a){
+            var n = a.length;
+            var left = 0, right = n-1;
+            while(left < right){
+                var middle = Math.floor((left + right)/2);
+                if(x <= a[middle]){
+                    right = middle;
+                }else{
+                    left = middle+1;
+                }
+            }
+            if(x == a[right]){
+                return right;
+            }
+            return null;
+        }
+        var a = [2, 4, 7, 12, 15, 21, 34, 35, 46, 57, 70, 82, 86, 92, 99];
+        console.log(binarySearch(35, a));
+
+        //7.3.2 do/while문
+        //do/while문은 반복해서 실행할지를 마지막 부분에서 판단
+        function fact2(n){
+            var k = 1, i = n;
+            do{
+                k *= (i--);
+            } while(i > 0);
+            return k;
+        }
+        console.log(fact2(5));
+
+        function newtonLapson(){
+            var EPSILON = 1.0e-10;
+            var d, xnew, xold;
+            var a = parseFloat(prompt("정수를 입력하십시오"));
+            xold = (a>1) ? a : 1.0;
+            do{
+                xnew = xold - (xold*xold - a)/(2.0*xold);
+                d = (xold-xnew)/xold;
+                xold = xnew;
+            }while(d > EPSILON);
+            console.log("sqrt("+a+") = "+xnew);
+        }
+        newtonLapson();
+
+        //7.3.3 for문
+        // 반복문은 대부분 세가지 공통점 1. 반복조건의 초기화 작업 2. 반복문의 조건식, 3. 반복 작업이 하나 끝났을 때 반복 조건을 갱신하는 작업
+        // for문은 이 세가지 작업을 명시적으로 한곳에 모아서 표기
+    </script>
+</head>
+<body>
+</body>
+</html>
