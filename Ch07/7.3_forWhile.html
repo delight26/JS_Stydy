@@ -81,6 +81,34 @@
         //7.3.3 for문
         // 반복문은 대부분 세가지 공통점 1. 반복조건의 초기화 작업 2. 반복문의 조건식, 3. 반복 작업이 하나 끝났을 때 반복 조건을 갱신하는 작업
         // for문은 이 세가지 작업을 명시적으로 한곳에 모아서 표기
+		for(var i=0 ; i<10 ; i++){
+			console.log(i);
+        }
+        for(var i=1, sum=0 ; i<=10 ; i++){
+			sum += i;
+        }
+        for(;;){
+			if(confirm("종료하시겠습니까?")){
+				break;
+            }
+        }
+
+        function sumArray(a){
+            var sum = 0;
+            for(var i=0 ; i<a.length ; i++){
+                sum += a[i];
+            }
+            return sum;
+        }
+        var a = [3, 5, 1, 2, 6, 7];
+        console.log(sumArray(a));
+        
+        //7.3.4 for/in문
+        //for/in문이 실행되면 먼저 객체 표현식을 평가. 객체표현식이 null 또는 undefined로 평가되면 for/in문을 빠져나옴
+        var obj = {a:1, b:2, c:3};
+        for(var p in obj){
+            console.log("p = " + p);
+        }
     </script>
 </head>
 <body>
