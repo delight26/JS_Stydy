@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>8.4_reCallFunc</title>
+    <script>
+        //8.4 재귀함수
+        //8.4.1 재귀 함수의 기본
+        //함수가 자기자신을 호출하는 행위를 재귀호출 이라고 한다. 이러한 재귀호출을 수행하는 함수를 재귀함수라고 한다.
+        //재귀 함수를 사용하면 특정 부류의 문제를 간단히 해결가능.
+        function ract(n){
+            if(n<=1){
+                return 1;
+            }
+            return n*fact(n-1);
+        }
+        fact(5);
+
+        var fact = function f(x){
+            if(n<=1){
+                return 1;
+            }
+            return n*f(n-1);
+        }
+
+        //arguments.callee를 사용하면 이름이 없는 익명 함수도 재귀호출을 할수 있다. arguments.callee가 지금 실행중인 함수를 가르킴
+        var fact = function(n){
+            if(n<=1){
+                return 1;
+            }
+            return n*arguments.callee(n-1);
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
