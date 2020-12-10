@@ -17,14 +17,14 @@
         // 그중에서 가장 중요한 컴포넌트는 렉시컬 환경 컴포넌트, 변수환경 컴포넌트, 디스바인딩 컴포넌트 이다.
         
         // 실행문맥
-        // ExecutionContext = {
+        ExecutionContext = {
             // 렉시컬 환경 컴포넌트
-            // LexicalEnvironment: {},
+            LexicalEnvironment: {},
             // 변수 환경 컴포넌트
-            // VariableEnvironment: {},
+            VariableEnvironment: {},
             // 디스 바인딩 컴포넌트
-            // ThisBinding: null,
-        // }
+            ThisBinding: null,
+        }
         // 렉시컬 환경 컴포넌트와 변수환경 컴포넌트는 타입이 같고 실제로 with문을 사용할 때를 제외하면 내부 값이 같으므로 똑같이 취급해도 무리가 없음.
         // 디스 바인딩 컴포넌트는 그 함수를 호출한 객체의 참조가 저장되는 곳.
 
@@ -34,12 +34,12 @@
         // 그 식별자가 가리키는 값을 키와 값의 쌍으로 바인드 해서 렉시컬 환경 컴포넌트에 기록 렉시컬 환경 컴포넌트는 환경 레코드의 외부 렉시컬 환경 참조 컴포넌트로 구성
 
         // 렉시컬 환경 컴포넌트
-        // LexicalEnvironment: {
+        LexicalEnvironment: {
             // 환경 레코드
-            // EnvironmentRecord: {},
+            EnvironmentRecord: {}
             // 외부 렉시컬 환경 참조
-            // OuterLexicalEnvironment Reference:{}
-        // }
+            OuterLexicalEnvironment Reference:{}
+        }
 
         // 환경 레코드
         // 환경 레코드는 유효 범위 안에 포함된 식별자를 기록하고 실행하는 영역으로 ECMAScript3의 변수 객체 와 매우 비슷한 역할을 함.
@@ -55,12 +55,12 @@
         // 이 환경 레코드는 선언적 환경 레코드와 객체 환경 레코드로 구성되어 있으며 저장하는 값의 유형에 따라 쓰임새가 달라짐.
         
         // 환경레코드
-        // EnvironmentRecord:{
+        EnvironmentRecord:{
             // 선언적 환경 레코드
-            // DeclarativeEnvironmentRecord:{},
+            DeclarativeEnvironmentRecord:{}
             // 객체 환경 레코드
-            // ObjectEnvironmentRecord:{}
-        // }
+            ObjectEnvironmentRecord:{}
+        }
 
         // 선언적 환경 레코드
         // 선언적 환경 레코드는 실제로 함수와, 변수 catch문의 식별자와 실행 결과가 저장되는 영역
@@ -70,6 +70,63 @@
         // with문의 렉시컬 환경이나 전역 객체처럼 별도의 객체에 저장된 데이터는 그 객체가 가진 키와 값의 쌍을 복사해 오는 것이 아니라 그 객체 전체의 참조를 가져와서 객체 환경
         // 레코드의 bindObject라는 프로퍼티에 바인드 하도록 만들어져 있음
         
+        // 8.5.5 전역 환경과 전역 객체의 생성
+        // 자바스크립트 인터프리터는 시작하마자자 렉시컬 환경 타입의 전역환경을 생성 웹 브라우저에 내장된 자바스크립트 인터프리터는 새로운 웹 페이지를 읽어 들인 후에 전역 환경을 생성
+        // 전역 객체를 생성한 다음 전역 환경의 객체 환경 레코드에 전역 객체의 참조를 대입전역 객체에는 프로퍼티가 있으며 최상위 레벨의 this는 전역 객체를 가리킴
+        this === window
+        // 전역환경
+        GlobalEnvironment={
+            ObjectEnviromentRecord:{
+                bindObject: window
+            },
+            OuterLexicalEnvironmentReference:null
+        }
+
+        // 전역 실행 문맥
+        ExecutionContext={
+            LexicalEnviroment: GlobalEnviroment,
+            ThisBinding: window
+        }
+
+        // 웹 브라우저의 자바스크립트 실행 환경에서는 Window객체가 전역 객체이므로 객체 환경 레코드의 bindObject프로퍼티에는 전역 객체 Window의 참조가 할당됨 이로인해 전역 환경의
+        // 변수와 함수를 window안에서 검색하게 됨. 전역 환경의 외부에는 다른 렉시컬 환경이 없으므로 외부 렉시컬 환경 참조에는 null을 할당 그리고 전역 실행 문맥의 디스 바인딩 컴포넌트
+        // 에도 window의 참조가 할당되어 전역 실행 문맥의 this가 window를 가리키게 되고 전역 실행 문맥의 프로퍼티를 디스 바인딩 컴포넌트 안에서 검색하게 됨 window객체는 window객체의 
+        // 프로퍼티인 window로 참조할 수 있음 window객체에는 일반 전역 객체의 프로퍼티와 클라이언트 측 자바스크립트 에서만 사용할 수 있는 다양한 프로퍼티가 정의되어 있음
+
+        // 8.5.6 프로그램의 평가와 전역 변수
+        // 전역 환경과 전역객체를 생성한 후에는 자바스크립트 프로그램을 앍어 들임 자바스크립트 프로그램을 다 읽어 들인 후에는 프로그램을 평가하여 최상위 레벨에 var문으로 작성한 전역 변수는
+        // 전역 환경의 레코드의 프로퍼티로 추가
+        
+        // 전역환경
+        GlobalEnviroment = {
+            // 전역 환경의 환경 레코드인 객체 환경 레코드에 window의 참조가 설정 되어 있음
+            ObjectEnviromentRecord:{
+                bindObject: window
+            },
+            OuterLexicalEnviromentReference: null
+        }
+        
+        // 자바스크립트 엔진은 전역 코드를 평가할 때 최상위 레벨에 var문으로 작성한 전역 변수를 전역 환경의 환경 레코드에 프로퍼티로 기록. 그 프로퍼티 이름은 식별자 이름이 되고 프로퍼티 값은
+        // undefined가 됨. 함수의 경우에는 최상위 레벨에 작성된 함수 선언문을 함수 객체로 생성해서 전역 환경의 환경 레코드에 프로퍼티로 기록 이처럼 최상위 레벨에 선언된 변수와 함수는
+        // 프로그램을 평가할 때 객체 환경 레코드에 기록
+        
+        var a = {x:1, y:2};
+        console.log(window.a);
+        function norm(x){
+            console.log(window.norm);
+        }
+        
+        // 전역 변수의 실체는 전역 객체의 프로퍼티 또는 전역 객체의 실행 문맥에 들어 있는 환경 레코드의 프로퍼티 마찬가지로 함수 안에 선언된 지역 변수와 중첩 함수의 참조 또한 그 함수가 속한 
+        // 실행환경의 환경 레코드의 프로퍼티임. 이처럼 자바스크립트의 모든 변수를 객체의 프로퍼티로 간주하면 쉽게 이해. 최상위 레벨에 선언된 변수와 함수는 프로그램을 평가하는 시점에
+        // 환경 레코드에 추가 최상위 레벨에 선언된 함수와 변수는 프로그램을 평가하는 단계에 이미 객체 환경 레코드에 추가된 상태이기 때문에 코드의 어느 위치에 작성해도 전체 프로그램이
+        // 참조할 수 있음 이것이 최상위 코드의 변수 선언문과 함수 선언문의 끌어올림 현상 var문과 함수 선언문으로 선언한 전역 변수는 [Configuable] 속성이 false로 설정되어 있어서 delete 연산
+        // 자로 삭제할수 없음 [Configuable]은 스팩에 정의된 명칭이며 자바스크립트에는 configuable이라는 이름으로 참조할수 있음
+        
+        var a = {x:1, y:2};
+        console.log(Object.getOwnPropertyDescriptor(window, 'a'));
+        delete a;
+        console.log(a);
+
     </script>
 </head>
 <body>
