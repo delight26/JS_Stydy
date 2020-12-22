@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>8.10_callBackFunc</title>
+    <script>
+        // 8.10 콜백 함수
+        // 8.10.1 콜백 함수
+        // 자바스크립트의 함수는 일급 객체이며 다른 함수에 인수로 넘겨질 수 있음. 콜백함수의 주체는 어디까지나 함수를 호출한 호출자. 
+        // 호출된 함수는 콜백 함수를 실행하지만 그 콜백 함수가 작업하는 내용에는 관여하지 않음.
+
+        // 함수f의 인수로 넘어간 함수인 g가 콜백함수
+        f(g);
+        function f(callback){
+            callback();
+        }
+
+        // 8.10.2 이벤트 처리기
+        // 함수를 호출할 때 무언가 사건이 발생하면 콜백 함수를 실행하도록 인수로 넘기는 행위
+        button.onclick=function(){};
+        button.addEventListener("click", function(){}, false);
+
+        // 8.10.3 타이버
+        // 타이머 메소드에 첫 번째 인수로 넘기는 함수가 콜백함수
+        setInterval(function(){}, 2000);
+    </script>
+</head>
+<body>
+</body>
+</html>
