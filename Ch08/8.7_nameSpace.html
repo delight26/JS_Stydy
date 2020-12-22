@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>8.7_nameSpace</title>
+    <script>
+        // 8.7 이름공간
+        // 8.7.2 객체를 이름 공간으로 활용하기
+        var myApp = myApp || {};
+
+        myApp.name = "Tom";
+        myApp.showName = function(){ console.log(myApp.name);};
+
+        myApp.view = {};
+        myapp.controls = {};
+
+        myApp.view.draw = function(){console.log(myApp.view);};
+        myApp.controls.timeInterval = 16;
+
+        // 8.7.3 함수를 이름 공간으로 활용하기
+        // 모듈 패턴
+        var Module = Module || {};
+        (function(_Module){
+            var name = "NoName";
+            function getName(){
+                return name;
+            }
+            _Module.showName = function(){
+                console.log(getName());
+            };
+            _Module.setName = function(x){
+                name = x;
+            };
+        })(Module);
+
+        Module.setName("Tom");
+        Module.showName();
+        
+    </script>
+</head>
+<body>
+</body>
+</html>
