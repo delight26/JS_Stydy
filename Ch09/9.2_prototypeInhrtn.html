@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>9.2_prototypeInhrtn</title>
+    <script>
+        // 9.2 프로토타입 상속
+        // 9.2.1 상속
+        // 상속이란 일반적으로 특정 객체가 다른 객체로부터 기능을 이어 받는것. 자바스크립트에서는 클래스가 아닌 객체를 상속 자바스크립트의 상속은 프로토타입 체인이라고 부르는
+        // 객체의 자료 구조로 구현되어 있으며, 프로토타입 상속이라 부름. 자바스크립트에서는 생성자가 클래스의 역할을 하지만 생성자를 상속하기 위한 구문을 언어 차원에서 제공하지
+        // 않음. 하지만 몇 가지 기법을 활용하면 상속과 비슷한 것을 흉내 낼수 있음. ECMAScript6부터는 생성자의 정의를 더 간결하고 명료하게 표현할수 있는 클래스 구문이 추가됨
+        
+        // 9.2.2 상속을 하는 이유
+        // 상속을 사용하면 이미 정의된 프로퍼티와 메서드의 코드를 재사용할 수 있고 새로운 기능을 추가해서 확장된 객체를 만들수도 있음. 중복 코드를 작성하지 않아도 되므로 유지
+        // 보수성이 높은 프로그램을 만들 수 있음
+        
+        // 9.2.3 프로토타입 체인
+        // 내부 프로퍼티 - 모든 객체는 내부 프로퍼티를 가지고 있음. 이것은 함수 객체의 prototype 프로퍼티와는 다른 객체. ECMAScript5 까지는 사용자가 이 내부 프로퍼티를 읽어나
+        // 쓸 수 없었지만 ECMAScript6 부터는 _proto_ 프로퍼티에 [[prototype]]의 값이 저장. 현재의 주요 웹 브라우저는 _proto_ 프로퍼티를 지원
+        var obj = {};
+        console.log(obj._proto_);
+
+        // 프로토타입 체인 - 객체의 _proto_ 프로퍼티는 그 객체에게 상속을 해 준 부모 객체를 가리킴. 객체는 _proto_ 프로퍼티가 가리키는 부모 객체의 프로퍼티를 사용할 수 있음.
+        // 자신이 갖고 있지 않은 프로퍼티를 _proto_ 프로퍼티가 가리키는 객체를 차례대로 거슬러 올라가며 검색. 이와 같은 객체의 연결고리를 프로토타입 체인이라 함. 객체의 _proto_
+        // 프로퍼티가 가리키는 객체가 바로 상속을 해준 객체, 이 객체를 그 객체의 프로토타입이라함. 객체는 자신이 가지고 있지 않은 특성(프로퍼티와 메서드)를 프로토타입 객체에 위임
+        var objA = {
+            name:"Tom",
+            sayHello:function(){console.log("Hello! " + this.name);}
+        };
+        var objB = {
+            name:"Huck"
+        };
+        objB._proto_ = objA;
+        var objC = {};
+        objC._proto_ = objB;
+        objC.sayHello();
+
+        // 프로토타입 가져오기 - 객체의 프로토타입은 메서드로 가져올 수 있음 웹 브라우저에서는 obj._proto_로도 프로토타입을 가져올 수 있지만 지원하지 않는 웹브라우저도 있음.
+        // Object.getPrototypeOf메서드는 ECMA5 이상 지원하는 자바스크립트 실행 환경에서 사용할수 있음. ECMA6부터는 객체의 프로토타입을 설정하는 메서드인 Object.setPrototypeOf도 추가
+        function F(){}
+        var obj = new F();
+        console.log(Object.getPrototypeOf(obj));
+
+        // 9.2.4 new 연산자의 역할
+        function Circle(center,radius){
+            this.center = center;
+            this.radius = radius;
+        }
+        Circle.prototype.area = function(){
+            return Math.PI * this.radius * this.radius;
+        };
+        var c = new Circle({x:0, y:0}, 2.0);
+
+        // new 연산자로 Circle 생성자를 사용하면 내부적으로 다음과 같은 작업을 수행함
+        // 1. 빈 객체를 생성
+        var newObj = {};
+        // 2. circle.prototype을 생성된 객체의 프로토타입으로 설정. 이때 Circle.prototype이 가리키는 값이 객체가 아니면 Object.prototype을 프로토타입으로 설정
+        newObj._proto_ = Circle.prototype;
+        // 3. Circle생성자를 실행하고 newObj를 초기화. 이때 this는 1로 생성한 객체로 설정. 인수는 new 연산자와 함께 사용한 인수를 그대로 사용
+        Circle.apply(newObj, arguments);
+        // 4. 완성된 객체를 결괏괎으로 반환 단. Circle 생성자가 객체를 반환하는 경우에는 그 객체를 반환.
+        return newObj;
+
+        // 9.2.5 프로토타입 객체의 프로퍼티
+        // 함수를 정의하면 함수 객체는 기본적으로 prototype 프로퍼티를 갖게됨. 그리고 이 prototype 프로퍼티는 프로토타입 객체를 가리키며, 이 프로토타입 객체는 기본적으로 constructor
+        // 프로퍼티와 내부 프로퍼티[[Prototype]](_proto_)을 가지고 있음.
+        // constructor프로퍼티 - constructor 프로퍼티는 함수 객체의 참조를 값으로 갖고 있음. 생성자와 생성자의 프로토타입 객체는 서로를 참조함. 생성자의 prototype프로퍼티가 프로토타입
+        // 객체를 가리키며, 이 프로토타입 객체의 constructor프로퍼티가 생성자를 가리키는 연결 고리로 묶여 있음. 반면 생성자로 생성한 인스턴스는 생성될 때의 프로토타입 객체의 참조만 가지고
+        // 있을 뿐 생성자와는 직접적인 연결 고리가 없음.
+        function F(){};
+        console.log(F.prototype.constructor);
+
+        // 인스턴스가 어떤 생성자로 생성된 것인지 알아내는 방법으로 인스턴스가 가진 프로토타입의 constructor프로퍼티 값을 확인하는 방법이 있음. 인스턴스는 프로토타입에서 constructor
+        // 프로퍼티를 상속받기 때문에 constructor프로퍼티를 인스턴스의 프로퍼티로 참조할 수 있음.
+        function F(){};
+        obj = new F();
+        console.log(obj.constructor);
+
+        // 내부 프로퍼티 - 함수 객체가 가진 프로토타입 객체의 내부 프로퍼티는 기본적으로 Object.prototype을 가리킴. 프로토타입 객체의 프로토타입은 Object.prototype이다. 생성자로 
+        // 생성한 인스턴스가 Object.prototype의 프로퍼티를 사용할 수 있음. 또한 Object.prototype의 프로토타입은 null을 가리킴. 
+        function F(){};
+        console.log(F.prototype._proto_);
+
+        // 프로토타입 객체의 교체 및 constructor 프로퍼티 - 생성자가 가진 prototype프로퍼티 값을 새로운 객체로 교체할 때는 주의해야함. 프로퍼티만 정의 되어 있는 새로운 객체를 
+        // prototype프로퍼티 값으로 대입하면 인스턴스와 생성자 사이의 연결 고리가 끈겨버림. 그 객체는 constructor 프로퍼티가 없기 때문. 인스턴스와 생성자 사이의 연결고리를 유지하려면
+        // prototype으로 사용할 객체에 constructor 프로퍼티를 정의하고, 그 프로퍼티에 생성자의 참조를 대입해야 함.
+        function Circle(center, radius){
+            this.center = center;
+            this.radius = radius;
+        }
+
+        Circle.prototype ={
+            constructor: Circle,
+            area: function(){return Math.PI * this.radius * this.radius;}
+        };
+
+        var c = new Circle({x:0, y:0}, 2.0);
+        console.log(c.constructor);
+        console.log(c instanceof Circle);
+
+        // 인스턴스 생성 후에 생성자의 프로토타입을 수정하거나 교체한 경우 - 인스턴스의 프로토타입은 생성자가 인스턴스를 생성할 때 가지고 있던 프로토타입 객체. 인스턴스를 생성한 후에 생성자
+        // 의 prototype 프로퍼티 값을 다른 객체로 교체해도 인스턴스의 프로토타입은 바뀌지 않음. 다시 말해 인스턴스의 프로퍼티는 생성하는 시점의 프로토타입에서 상속받습니다. 생성된 후에는
+        // 생성자의 프로토타입을 바꾸어도 교체한 객체로부터는 프로퍼티를 상속받지 않음.
+
+        function Circle(center, radius){
+            this.center = center;
+            this.radius = radius;
+        }
+        var c = new Circle({x:0, y:0}, 2.0);
+        Circle.prototype = {
+            constructor:Circle,
+            area:function(){return Math.PI * this.radius * this.radius;}
+        };
+        c.area();
+
+        // 하지만 생성자가 기존에 가지고 있던 프로토타입 객체에 프로퍼티를 추가한 경우에는 생성자와 인스턴스 사이의 연결 고리가 끊기지 않음. 생성자에서 정의된 프로퍼티를 인스턴스에서 사용가능.
+        function Circle(center, radius){
+            this.center = center;
+            this.radius = radius;
+        }
+        var c = new Circle({x:0, y:0}, 2.0);
+        Circle.prototype.area = function(){
+            return Math.PI * this.radius * this.radius;
+        };
+        c.area();
+    </script>
+</head>
+<body>
+</body>
+</html>
