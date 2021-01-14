@@ -123,6 +123,47 @@
             return Math.PI * this.radius * this.radius;
         };
         c.area();
+
+        // 9.2.6 프로토타입의 확인
+        // 특정 프로토타입 객체가 그 객체의 프로토타입 체인에 포함되어 있는지 확인하는 방법에는 instanceof연산자를 사용하는 방법과 isPrototypeOf 메서드를 사용하는 방법이 있음
+        // instanceof 연산자 - instanceof 연산자는 지정한 객체의 프로토타입 체인에 지정한 생성자의 프로토타입 객체가 포함되어 있는지 판정. instanceof연산자가 확인하는 것은 그 인스턴스가
+        // 해당 생성자로 생성되었는지 여부가 아닌 instanceof 연산자는 인스턴스가 생성자의 프로토타입 객체를 상속받았는지 확인하는점에 유의
+        // 객체 instanceof 생성자
+        function F(){};
+        var obj = new F();
+        console.log(obj instanceof F);
+        console.log(obj instanceof Object);
+        console.log(obj instanceof Date); 
+
+        // isPrototypeOf 메서드 - 특정 객체가 다른 객체의프로토타입 체인에 포함되어 있는지 판정.
+        // 프로토타입객체.isPrototypeOf(객체)
+        function F(){};
+        var obj = new F();
+        console.log(F.prototype.isPrototypeOf(obj));
+        console.log(Object.prototype.isPrototypeOf(obj));
+        console.log(Date.prototype.isPrototypeOf(obj));
+
+        // 9.2.7 Object.prototype
+        // Object.prototype의 메서드는 모든 내장 객체로 전파되며 모든 인스턴스에서 사용할 수 있음. 
+        // Object 생성자 - 내장 생성자로 일반적인 객체를 생성. Objcet생성자를 인수 없이 실행하면 Object 생성자는 빈 객체를 생성
+        var obj = new Object();
+        var obj = {};
+        var obj = new Object("ABC");
+        var obj = Object();
+
+        // 9.2.8 Object.create로 객체 생성하기
+        // Object.create 메서드를 사용하면 명시적으로 프로토타입을 지정해서 객체를 생성할 수 있음.
+        var person1 = {
+            name: "Tom",
+            sayHello: function(){console.log("Hello!" + this.name);}
+        };
+        var person2 = Objcet.create(person1);
+        person2.name = "Huck";
+        person2.sayHello();
+
+        // 백지상태의 객체
+        var blankObject = Object.create(null);
+
     </script>
 </head>
 <body>
