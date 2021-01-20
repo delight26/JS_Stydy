@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>9.4_attrProperty</title>
+    <script>
+        // 9.4 프로퍼티의 속성
+        // 9.4.1 프로퍼티의 속성
+        // 프로퍼티는 프로퍼티의 이름과 값이 한 쌍을 이룬것이지만 이와는 별개로 내부적인 속성을 몇 개 더 가지고 있음. ES3에서도 열거가 가능한지를 뜻하는 내부 속성은 있었지만 그것을 수정하는
+        // 수단은 제공하지 않음 ES5부터는 쓰기가 가능 여부와 재정의 가능 여부를 뜻하는 내부 속성 두 개, 접근자 프로퍼티, 내부 속성을 조작할 수 있는 수단이 추가됨
+        // 쓰기가능 - 프로퍼티에 쓰기가 가능한 지를 뜻하는 속성. 
+        // 열거가능 - 프로퍼티가 for/in 문이나 Object.keys 등의 반복문으로 찾을 수 있는 대상인지를 뜻하는 속성
+        // 재정의 가능 - 프로퍼티의 내부 속성을 수정할 수 있는지를 뜻하는 속성. 
+        // 객체에 새로운 프로퍼티를 추가하면 기본적으로 그 프로퍼티의 기본 속성이 쓰기 가능/열 가능/재정의 가능 으로 설정됨. 내장 생성자가 가지고 있는 프로토타입 객체의 프로퍼티 대부분의 내장
+        // 속성은 쓰기 가능/열 가능/재정의 가능 이다.
+
+        // 9.4.2 프로퍼티 디스크립터와 프로퍼티를 읽고 쓰는 메서드
+        // 프로퍼티의 속성은 프로퍼티 디스크립터로 설정할 수 있음.
+        // 프로퍼티 디스크립터 - 프로퍼티 디스크리벝는 프로퍼티의 속성 값을 뜻하는 객체. 이 객체가 가진 프로퍼티 이름은 프로퍼티가 가진 속성이름과 같음
+        // 데이터 프로퍼티의 프로퍼티 디스크립터는 4개의 프로퍼티를 가짐
+        // {
+        //     value: "프로퍼티의 값",
+        //     writable: "논리값",
+        //     enumerable: "논리값",
+        //     configurable: "논리값",
+        // }
+        // 접근자 프로퍼티의 프로퍼티 디스크립터는 4개의 프로퍼티를 가짐
+        // {
+        //     get: getter함수값,
+        //     set: setter함수값,
+        //     enumerable: 논리값,
+        //     configuable: 논리값,
+        // }
+
+        // 프로퍼티 디스크립터 가져오기 : Object.getOwnPropertyDescriptor - 객체 프로퍼티의 프로퍼티 디스크립터를 가져옴. 첫 번째 인수는 객체의 참조 두 번째 인수는 프로퍼티 이름을 뜻하는 
+        // 문자열.
+        var tom = {name : "Tom"};
+        Object.getOwnPropertyDescriptor(tom,"name");
+        // 프로토타입으로 상속받은 프로퍼티나 없는 프로퍼티를 지정하면 undefined를 반환
+        Object.getOwnPropertyDescriptor({},"name");
+        Object.getOwnPropertyDescriptor(tom,"toString");
+
+        // 객체의 프로퍼티 설정하기 : Object.definedProperty - 객체의 프로퍼티에 프로퍼티 디스크립터를 설정. 첫 번째 인수는 객체의 참조, 두 번쨰 인수는 프로퍼티 이름을 뜻하는 문자열, 
+        // 세번째 인수는 프로퍼티 디스크립터와 참조. 이 메서드를 사용할 때 프로퍼티 디스크립터의 각 프로퍼티는 생략할 수 있음. 디스크립터의 일부 프로퍼티를 생략한 후에 특정 객체에 새로운
+        // 프로퍼티를 추가하면 새로운 프로퍼티의 속성 값 중에서 프로퍼티 디스크립터에서 생략한 프로퍼티에 대응하는 속성 값이 false 또는 undefined로 설정. 디스크립터의 일부 프로퍼티를 생략한
+        // 후에 특정 객체가 갖고 있는 프로퍼티를 수정하면 그 프로퍼티의 속성 값 중에서 프로퍼티 디스크립터에서 생략한 프로퍼티에 대응하는 속성 값은 수정하지 않음.
+        var obj = {};
+        Object.definedProperty(obj, "name", {
+            value: "Tom",
+            writable: true,
+            enumerable: false,
+            configurable: true
+        });
+        Object.getOwnPropertyDescriptor(obj, "name");
+
+        // 속성을 바꾸는 예 : person객체를 생성 후에 name을 수정 불가로 만듬 person.name에 값을 대입해도 무시됨
+        var person = {name : "Tom"};
+        Object.defineProperty(person,"name",{
+            writable: false,
+        });
+        Object.getOwnPropertyDescriptor(person, "name");
+        person.name = "Huck";
+        console.log(person.name);
+
+        // person의 프로퍼티인 sayHello를 열거할 수 없도록 설정. sayHello는 열거할 수 없는 프로퍼티가 됨. for/in 문을 사용해서 person의 프로퍼티를 열거해도 sayHello는 열거하지 않음.
+        var person = {
+            name : "Tom",
+            age : 17,
+            sayHello : function(){console.log("Hello!" + this.name);}
+        };
+        Object.defineProperty(person, "sayHello", {enumerable : false});
+        for(var p in person) console.log(p);
+
+        // person객체의 프로퍼티 중 age를 다시 정의할 수 없도록 설정. delete문으로 person.age를 삭제하라는 명령이 무시됨. age의 enumerable과 configurable 속성을 바꾸려고 시도하면 오류
+        // 발생. 단 writable속성은 true일때 false로 바꿀 수 있음. 한 번 configuable속성 값을 false로 바꾸면 writable속성 값이 true일때 false로 바꿀 수 있을 뿐, 그 외의 내부 속성 값은
+        // 바꿀 수 없게 된다.
+        var person = {name:"Tom", age:17, sex:"남"};
+        Object.defineProperty(person,"age",{configurable:false});
+        delete person.age;
+        console.log(person.age);
+        Object.defineProperty(person,"age",{enumerable:false});
+        Object.defineProperty(person,"age",{writable:false});
+
+        // 객체의 프로퍼티 속성 여러 개를 한꺼번에 설정: Object.definedproperties - 객체가 가진 프로퍼티 여러 개에 각각의 프로퍼티 디스크립터를 설정하며 첫 번째 인수는 객체의 참조.
+        // 두 번째 인수는 새롭게 설정 또는 변경하고자 하는 프로퍼티 이름이 키로 지정된 프로퍼티 여러 개가 모인 객체이며, 각 키 값은 프로퍼티 디스크립터의 참조. 실행 후 수정된 객체의
+        // 참조를 반환함.
+        var person = Object.defineProperties({},{
+            _name:{
+                value:"Tom",
+                writable:true,
+                enumerable:true,
+                configurable:true
+            },
+            name:{
+                get:function(){return this._name},
+                set:function(value){
+                    var str = value.charAt(0).toUpperCase()+value.substring(1);
+                    this._name = str;
+                },
+                enumerable:true,
+                configurable:true
+            }
+        });
+        Object.getOwnPropertyDescriptor(person,"name");
+    </script>
+</head>
+<body>
+</body>
+</html>
