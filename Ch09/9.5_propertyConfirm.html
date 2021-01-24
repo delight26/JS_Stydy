@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>9.5_propertyConfirm</title>
+    <script>
+        // 9.5 프로퍼티가 있는지 확인하기
+        // 9.5.1 in 연산자
+        var person = {name : "Tom"};
+        console.log("name" in person);
+        console.log("age" in person);
+        console.log("toString" in person);
+
+        // 9.5.2 hasOwnProperty 메서드
+        // 지명한 프로퍼티가 그 객체에 소유한 프로퍼티면 true를 반환 상속받은 프로퍼티면 false를 반환
+        var person = {name : "Tom"};
+        console.log(person.hasOwnProperty("name"));
+        console.log(person.hasOwnProperty("toString"));
+
+        // 9.5.3 propertyIsEnumerable 메서드
+        // 지정한 프로퍼티가 그 객체가 소유한 프로퍼티이며 열거할 수 있을 때 true를 반환
+        var person1 = {name : "Tom", age : 17};
+        var person2 = Object.create(person1);
+
+        person2.name = "Huck";
+        console.log(person2.propertyIsEnumerable("name"));
+        console.log(person2.propertyIsEnumerable("age"));
+        console.log(Object.property.propertyIsEnumerable("toString"));
+    </script>
+</head>
+<body>
+</body>
+</html>

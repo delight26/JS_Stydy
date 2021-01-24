@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>9.7_propertyLock</title>
+    <script>
+        // 9.7 객체 잠그기
+        // 객체를 잠글 때는 객체의 확장 가능 속성, 재정의 가능 속성, 쓰기 가능 속성을 설정. ECMA5부터 이 속성들을 한꺼번에 설정할 수 있는 메서드가 추가. 잠금 강도에 따라 3단계 잠금이 가능해짐
+
+        // 9.7.1 확장 가능 속성
+        // 객체에 새로운 프로퍼티를 추가할 수 있는지를 결정. 확장 가능 속성 값이 true로 설정된 객체에는 새로운 프로퍼티를 추가할 수 있음. false로 설정된 객체에는 추가할 수 없음. 사용자가
+        // 정의한 객체와 내장 객체는 기본적으로 확장이 가능. 호스트 객체의 확장 가능 속성은 자바스크립트 실행 환경에 따라 설정된 값이 다름.
+
+        // 9.7.2 확장 방지 : Object.preventExtension 메서드
+        // 인수로 받은 객체를 확장할 수 없게 만듬. 이 메서드로 확장할 수 없게 만든 객체는 두번 다시 프로퍼티를 추가할 수 없음.
+        var person = {name : "Tom"};
+        Object.preventExtensions(person);
+        person.age = 17;
+        console.log("age" in person);
+        // 확장할 수 없는 객체에 프로퍼티를 추가하는 명령은 무시됨. 또한 strict모드에서 setter가 없는 접근자 프로퍼티를 쓰려고 시도하면 오류가 발생
+        console.log(Object.isExtensible(person));
+
+        // 9.7.3 밀봉 : Object.seal 메서드
+        // 인수로 받은 객체를 밀봉. 밀봉이란 객체에 프로퍼티를 추가하는 것을 금지하고 기존의 모든 프로퍼티를 재정의할 수 없게 만드는 것. 객체를 밀봉하면 프로퍼티의 추가, 삭제, 수정을 할 수 없고
+        // 값의 읽기와 쓰기만 가능.
+        var person = {name : "Tom"};
+        Object.seal(person);
+        person.age = 17;
+        delete person.name;
+        Object.defineProperty(person, "name", {enumerable: false});
+        console.log("name" in person);
+        console.log("age" in person);
+        console.log(Object.getOwnPropertyDescriptor(person, "name"));
+        person.name = "Huck"
+        console.log(person);
+        // Object.isSealed 메서드를 사용하면 인수로 받은 객체가 밀봉된 상태인지 확인할 수 있음
+        console.log(Object.isSealed(person));
+
+        // 9.7.4 동결 : Object.freeze 메서드
+        // 인수로 받은 객체를 동결. 동결이란 객체에 프로퍼티를 추가하는 것을 금지하고 기존의 모든 프로퍼티를 재정의 할 수 없게 만들며 데이터 프로퍼티를 쓸 수 없게 만드는 것. 객체를 동결하면
+        // 객체의 프로퍼티가 읽기만 가능한 상태가 됨. 객체에 접근자 프로퍼티가 정의되어 있다면 게터 함수와 세터 함수 모두 호출할 수 있음.
+        var person = {name : "Tom"};
+        Object.freeze(person);
+        // Object.isFreeze 메서드를 사용하면 인수로 받은 객체가 동결 상태인지 확인할 수 있음.
+        console.log(Object.isFrozen(person));
+
+    </script>
+</head>
+<body>
+</body>
+</html>
