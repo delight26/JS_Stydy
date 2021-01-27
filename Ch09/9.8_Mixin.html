@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>9.8_Mixin</title>
+    <script>
+        // 9.8 Mixin
+        // 믹스인 기법은 객체의 코드를 상속과는 다른 방식으로 재사용하는 방법을 제시
+        // 9.8.1 Mixin 함수
+        // 특정 객체에 다른 객체가 가지고 있는 프로퍼티를 붙여 넣어 뒤섞는 기법을 말함. 믹스인은 상속을 사용하지 않는 대신에 특정 객체의 프로퍼티를 동적으로 다른 객체에 추가.
+
+        function mixin(target, source){
+            for(var property in source){
+                if(source.hasOwnProperty(property)){
+                    target[property] = source[property];
+                }
+            }
+            return target;
+        }
+
+        var obj1 = {a:1, b:2};
+        var obj2 = {b:3, c:4};
+        var obj = mixin(obj1,obj2);
+        console.log(obj);
+        // mixin 함수는 source 객체가 소유하고 있으며 열거 할수 있는 모든 프로퍼티를 target객체에 복사. target객체에 있는 프로퍼티 값은 덮어쓰고 target객체에 없는 프로퍼티는 추가.
+        // 덮어쓰거나 추가할 때 사용하는 방식이 얕은 복사. ECMA6부터 추가된 Object.assign 메서드를 사용하면 mixin과 같은 작업을 할수 있음.
+
+        // 9.8.2 좀 더 완전한 Mixin 함수
+        // mixin 함수가 persin1객체의 프로퍼티를 person2 객체에 복사할 때 단순히 새로운 프로퍼티를 대상 객체에 추가한 다음 원본 객체의 프로퍼티가 복사하는 시점에 가지고 있던 값을 할당함
+        // 객체의 접근자 프로퍼티를 다른 객체에 믹스인하려면 mixon함수에서 프로퍼티를 생성할 때 Object.defineProperty 메서드를 사용해야함.
+        var person1 = {
+            _name = "Tom",
+            get name(){
+                return this._name;
+            }
+        };
+        var person2 = {};
+        mixin(person2,person1);
+        person2.name = "Huck";
+        console.log(person2.name);
+        console.log(person2);
+
+        function mixin(target, source){
+            var keys = Object.keys(source);
+            for(var i=0 ; i<keys.length ; i++){
+                var descriptor = Object.getOwnPropertyDescriptor(source, keys[i]);
+                Object.defineProperty(target, keys[i], descriptor);
+            }
+            return target;
+        }
+
+        var person1 = {
+            _name = "Tom",
+            get name(){
+                return this._name;
+            }
+        };
+        var person2 = {};
+        mixin(person2,person1);
+        person2.name = "Huck";
+        console.log(person2.name);
+        console.log(person2);
+    </script>
+</head>
+<body>
+</body>
+</html>
